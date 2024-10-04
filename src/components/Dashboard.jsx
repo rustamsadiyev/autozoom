@@ -6,16 +6,15 @@ const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
-  const [nameEn, setNameEn] = useState("");
-  const [nameRu, setNameRu] = useState("");
-  const [image, setImage] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const token = localStorage.getItem("token");
 
-  // GET 
+  // GET
   const getCategories = async () => {
     try {
-      const response = await fetch("https://autoapi.dezinfeksiyatashkent.uz/api/categories");
+      const response = await fetch("https://api.dezinfeksiyatashkent.uz/api/categories");
       const data = await response.json();
       setCategories(data.data || []);
     } catch (error) {
@@ -30,18 +29,17 @@ const Dashboard = () => {
   // POST
   const handlePost = async (e) => {
     e.preventDefault();
-    if (!nameEn || !nameRu) {
+    if (!name || !description) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("name_en", nameEn);
-    formData.append("name_ru", nameRu);
-    formData.append("images", image);
+    formData.append("name", name);
+    formData.append("description", description);
 
     try {
-      const response = await fetch("https://autoapi.dezinfeksiyatashkent.uz/api/categories", {
+      const response = await fetch("https://api.dezinfeksiyatashkent.uz/api/categories", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +60,7 @@ const Dashboard = () => {
   // DELETE
   const handleDeleteCategory = async (id) => {
     try {
-      const response = await fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${id}`, {
+      const response = await fetch(`https://api.dezinfeksiyatashkent.uz/api/categories/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,9 +81,8 @@ const Dashboard = () => {
     const category = categories.find((item) => item.id === id);
     if (category) {
       setEditingCategoryId(id);
-      setNameEn(category.name_en);
-      setNameRu(category.name_ru);
-      setImage(null);
+      setName(category.name);
+      setDescription(category.description);
       setModalOpen(true);
     }
   };
@@ -93,20 +90,17 @@ const Dashboard = () => {
   // UPDATE Category
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (!nameEn || !nameRu) {
+    if (!name || !description) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("name_en", nameEn);
-    formData.append("name_ru", nameRu);
-    if (image) {
-      formData.append("images", image);
-    }
+    formData.append("name", name);
+    formData.append("description", description);
 
     try {
-      const response = await fetch(`https://autoapi.dezinfeksiyatashkent.uz/api/categories/${editingCategoryId}`, {
+      const response = await fetch(`https://api.dezinfeksiyatashkent.uz/api/categories/${editingCategoryId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -124,6 +118,11 @@ const Dashboard = () => {
     }
   };
 
+  const deleteToken = () => {
+    localStorage.removeItem("token");
+    window.location.href="/login"
+  }
+
   return (
     <div className="p-4">
       <ToastContainer />
@@ -132,14 +131,14 @@ const Dashboard = () => {
         onClick={() => {
           setModalOpen(true);
           setEditingCategoryId(null);
-          setNameEn("");
-          setNameRu("");
-          setImage(null);
+          setName("");
+          setDescription("");
         }}
         className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-4"
       >
         POST
       </button>
+      <button className="w-[100px] h-[40px] rounded-md ml-[60rem] bg-yellow-300 " onClick={deleteToken}>Logout</button>
 
       {modalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -149,32 +148,23 @@ const Dashboard = () => {
             </h2>
             <form onSubmit={editingCategoryId ? handleUpdate : handlePost}>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Name (EN)</label>
+                <label className="block text-sm font-medium mb-1">Name</label>
                 <input
                   type="text"
-                  value={nameEn}
-                  onChange={(e) => setNameEn(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="border border-gray-300 p-2 w-full rounded"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Name (RU)</label>
+                <label className="block text-sm font-medium mb-1">Description</label>
                 <input
                   type="text"
-                  value={nameRu}
-                  onChange={(e) => setNameRu(e.target.value)}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   className="border border-gray-300 p-2 w-full rounded"
                   required
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files[0])}
-                  className="border border-gray-300 p-2 w-full rounded"
                 />
               </div>
               <div className="flex justify-end">
@@ -200,24 +190,16 @@ const Dashboard = () => {
       <table className="text-center min-w-full bg-white border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-gray-600">
-            <th className="py-2 px-4 border-b">Name (EN)</th>
-            <th className="py-2 px-4 border-b">Name (RU)</th>
-            <th className="py-2 px-4 border-b">Image</th>
+            <th className="py-2 px-4 border-b">Name </th>
+            <th className="py-2 px-4 border-b">Description</th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
           {categories.map((item) => (
             <tr key={item.id} className="hover:bg-gray-50">
-              <td className="py-2 px-4 border-b">{item.name_en}</td>
-              <td className="py-2 px-4 border-b">{item.name_ru}</td>
-              <td className="py-2 pl-0 h-[100px] ml-10 border-b">
-                <img
-                  src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${item.image_src}`}
-                  alt={item.name_en}
-                  className="w-24 h-18 object-cover"
-                />
-              </td>
+              <td className="py-2 px-4 border-b">{item.name}</td>
+              <td className="py-2 px-4 border-b">{item.description}</td>
               <td className="py-2 px-4 border-b">
                 <button
                   onClick={() => handleEdit(item.id)}

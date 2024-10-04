@@ -19,7 +19,7 @@ function App() {
   const handleLogin = async () => {
     try {
       const response = await fetch(
-        "https://autoapi.dezinfeksiyatashkent.uz/api/auth/me",
+        "https://api.dezinfeksiyatashkent.uz/api/auth/me",
         {
           method: "GET",
           headers: {

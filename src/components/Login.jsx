@@ -10,9 +10,9 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+// https://api.dezinfeksiyatashkent.uz/api/auth/signin
     try {
-      const response = await fetch("https://autoapi.dezinfeksiyatashkent.uz/api/auth/signin", {
+      const response = await fetch("https://api.dezinfeksiyatashkent.uz/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ function Login() {
 
       if (res.success === true) {
         localStorage.setItem("token", res.data.tokens.accessToken.token);
-        window.location.href = "/home"
+        window.location.href= "/home"
       } else {
         console.log("Login failed:", res.message || "Unknown error");
         toast.error(res.message); 

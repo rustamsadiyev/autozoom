@@ -5,7 +5,7 @@ import { FaCog, FaHome, FaBuilding, FaCar, FaCity, FaMapMarkedAlt, FaBox } from 
 const Sidebar = () => {
   return (
     <div className="w-60 h-screen bg-blue-900 text-white flex flex-col">
-      <div className="p-4 text-lg font-semibold">AvtozoomAdmin</div>
+      <div className="p-4 text-lg font-semibold">UzloyalAdmin</div>
 
       <nav className="mt-4">
         {/* Dashboard */}
@@ -17,7 +17,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaHome className="mr-3" /> Dashboard
+          <FaHome className="mr-3" /> Categories
         </NavLink>
 
         {/* Settings */}
@@ -29,7 +29,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaCog className="mr-3" /> Settings
+          <FaCog className="mr-3" /> Faqs
         </NavLink>
 
         {/* Brands */}
@@ -41,7 +41,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaBuilding className="mr-3" /> Brands
+          <FaBuilding className="mr-3" /> News
         </NavLink>
 
         {/* Models */}
