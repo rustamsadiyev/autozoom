@@ -190,14 +190,18 @@ const Dashboard = () => {
       <table className="text-center min-w-full bg-white border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-gray-600">
-            <th className="py-2 px-4 border-b">Name </th>
+            <th className="py-2 px-4 border-b">No</th>
+            <th className="py-2 px-4 border-b">ID</th>
+            <th className="py-2 px-4 border-b">Name</th>
             <th className="py-2 px-4 border-b">Description</th>
             <th className="py-2 px-4 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {categories.map((item) => (
+          {categories.map((item, index) => (
             <tr key={item.id} className="hover:bg-gray-50">
+              <td className="py-2 px-4 border-b">{index + 1}</td>
+              <td className="py-2 px-4 border-b">{item.id}</td>
               <td className="py-2 px-4 border-b">{item.name}</td>
               <td className="py-2 px-4 border-b">{item.description}</td>
               <td className="py-2 px-4 border-b">
