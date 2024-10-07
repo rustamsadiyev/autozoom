@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaCog, FaHome, FaBuilding, FaCar, FaCity, FaMapMarkedAlt, FaBox } from "react-icons/fa"; // Example icons
+import { FaCog, FaHome, FaBuilding, FaCity, FaMapMarkedAlt, FaBox } from "react-icons/fa"; // Example icons
 
 const Sidebar = () => {
   return (
@@ -53,7 +53,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaBox className="mr-3" /> Models
+          <FaBox className="mr-3" /> Blogs
         </NavLink>
 
         {/* Locations */}
@@ -65,7 +65,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaMapMarkedAlt className="mr-3" /> Locations
+          <FaMapMarkedAlt className="mr-3" /> Services
         </NavLink>
 
         {/* Cities */}
@@ -77,19 +77,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaCity className="mr-3" /> Cities
-        </NavLink>
-
-        {/* Cars */}
-        <NavLink
-          to="/home/cars"
-          className={({ isActive }) =>
-            `flex items-center px-4 py-3 text-sm ${
-              isActive ? "bg-blue-600" : "hover:bg-blue-700"
-            }`
-          }
-        >
-          <FaCar className="mr-3" /> Cars
+          <FaCity className="mr-3" /> Sources
         </NavLink>
       </nav>
     </div>

@@ -8,7 +8,6 @@ import Settings from "./components/Settings";
 import Brands from "./components/Brands";
 import Cities from "./components/Cities";
 import Models from "./components/Models";
-import Cars from "./components/Cars";
 import Locations from "./components/Locations";
 
 function App() {
@@ -62,7 +61,6 @@ function App() {
           <Route path="models" element={<Models />} />
           <Route path="cities" element={<Cities />} />
           <Route path="locations" element={<Locations />} />
-          <Route path="cars" element={<Cars />} />
 
         </Route>
       </Routes>
